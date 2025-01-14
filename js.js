@@ -2,6 +2,9 @@ const HtmlElement = function (type, textContent) {
     this.id = HtmlElement.prototype.count++;
     this.type = type
     this.textContent = textContent
+    if(new.target)
+        throw new Error("error");
+        
 }
 
 HtmlElement.prototype.count = 0;
@@ -56,9 +59,14 @@ function addElement() {
         alert("אנא השלם סוג.");
         return;
     }
-    const elementHtml = new HtmlElement(type, text)
-    let elem = elementHtml.render()
-    document.body.appendChild(elem)
+    try {
+       const elementHtml = new HtmlElement(type, text)
+       let elem = elementHtml.render()
+       document.body.appendChild(elem) 
+    } catch (Error) {
+        alert(Error.message)
+    }
+    
 }
 function addImage() {
     let src = document.querySelector(".src").value
